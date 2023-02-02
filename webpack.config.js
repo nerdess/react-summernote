@@ -1,10 +1,10 @@
-const path = require('path');
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
+const path = require('path');
 
 const src = path.join(__dirname, 'src');
-const dist = path.join(__dirname, 'dist');
+const dist = path.resolve(__dirname, 'dist');
 
 module.exports = {
   context: __dirname,
@@ -37,42 +37,36 @@ module.exports = {
       amd: 'jquery'
     }
   }],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
+        test: /\.(otf|eot|svg|ttf|woff|woff2)(\?.+)?$/,
+        type: 'asset/resource'
+      }
+    ]
+  },
   plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
     }),
-    new CopyWebpackPlugin([{
-      from: 'node_modules/summernote/dist/lang', to: '../lang'
-    }]),
-    new ExtractTextPlugin('[name].css')
+    new MiniCssExtractPlugin(),
+    /*new CopyWebpackPlugin({
+      patterns: [
+        { from: 'node_modules/summernote/dist/lang', to: '../lang' },
+      ],
+    })*/
   ],
-  module: {
-    rules: [
-      {
-        test: /\.jsx$|\.js$/,
-        exclude: /(node_modules)/,
-        use: [{
-          loader: 'babel-loader',
-          query: {
-            presets: ['es2015', 'react']
-          }
-        }]
-      },
-      {
-        test: /\.(css)(\?.+)?$/,
-        use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
-      },
-      {
-        test: /\.(otf|eot|svg|ttf|woff|woff2)(\?.+)?$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 4096,
-            name: '[name].[ext]'
-          }
-        }]
-      }
-    ]
+  resolve: {
+    extensions: ['*', '.js', '.jsx']
   }
 };
