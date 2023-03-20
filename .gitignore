@@ -2,8 +2,8 @@
 node_modules
 
 # production
-dist
-lang
+#dist
+#lang
 
 # misc
 .DS_Store
