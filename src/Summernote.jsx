@@ -32,9 +32,6 @@ const ReactSummernote = ({
     $(ref.current).summernote({
       ...options,
       callbacks: {
-        onInit: function () {
-          console.log('Summernote WYSIWYG is launched');
-        },
         onDialogShown: (e, f, g) => {
           $('button.close').on('click', function () {
             $('.modal').modal('hide');

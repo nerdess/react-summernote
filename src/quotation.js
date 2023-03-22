@@ -35,8 +35,6 @@
 					return '&bdquo;' + text + '&ldquo;';
 				};
 				context.memo('button.quotation', () => {
-					console.log('lang', lang);
-
 					const button = ui.button({
 						contents: options.quotation.icon,
 						tooltip: lang.quotation.tooltip,

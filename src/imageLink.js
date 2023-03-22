@@ -18,7 +18,6 @@
 
 		{
 			imageLink: function (context) {
-				console.log('self', this);
 	
 				var self = this,
 					ui = $.summernote.ui,
@@ -106,6 +105,7 @@
 					});
 				};
 				this.showImageAttributesDialog = function () {
+
 					return $.Deferred(function (deferred) {
 						var $imageSrc = self.$dialog.find('.note-imageLink-src'),
 							$imageTitle = self.$dialog.find('.note-imageLink-title'),
@@ -129,6 +129,7 @@
 						});
 						ui.showDialog(self.$dialog);
 					});
+					
 				};
 			},
 		}
